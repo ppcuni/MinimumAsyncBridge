@@ -9,6 +9,19 @@ namespace System.Threading.Tasks
     /// </summary>
     public class Task
     {
+        private string _key;
+
+        public Task()
+        {
+            _key = ReferenceCounter.CreateKey();
+            ReferenceCounter.Add(_key);
+        }
+
+        ~Task()
+        {
+            ReferenceCounter.Remove(_key);
+        }
+
         public TaskStatus Status { get; protected internal set; }
 
         /// <summary>
